@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neha Rai — Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEF3FB;
+    --bg-panel: #0F2A52;
+    --ink: #16213A;
+    --ink-soft: #4F5A78;
+    --cream: #E7EEFC;
+    --emerald: #2653D4;
+    --emerald-deep: #1A3A9E;
+    --ochre: #C98A3E;
+    --line: rgba(29,32,30,0.12);
+    --panel-line: rgba(243,238,227,0.14);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: 72px; scroll-behavior: smooth; }
+  *, *::before, *::after { box-sizing: inherit; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B1526;
+      --bg-panel: #070F1E;
+      --ink: #E7EEFC;
+      --ink-soft: #AAB4CC;
+      --cream: #0F1D33;
+      --line: rgba(243,238,227,0.14);
+      --panel-line: rgba(243,238,227,0.1);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B1526;
+    --bg-panel: #070F1E;
+    --ink: #E7EEFC;
+    --ink-soft: #AAB4CC;
+    --cream: #0F1D33;
+    --line: rgba(243,238,227,0.14);
+    --panel-line: rgba(243,238,227,0.1);
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .serif { font-family: 'Fraunces', Georgia, 'Times New Roman', serif; }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace; }
+
+  a { color: inherit; }
+
+  /* scroll progress */
+  #progress {
+    position: fixed; top: env(safe-area-inset-top, 0px); left: 0; height: 3px;
+    background: var(--emerald); width: 0%; z-index: 100; transition: width 80ms linear;
+  }
+
+  nav {
+    position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 90;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px clamp(20px, 5vw, 56px);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-name { font-size: 15px; font-weight: 600; letter-spacing: 0.01em; }
+  .nav-links { display: flex; gap: clamp(16px, 3vw, 32px); font-size: 14px; }
+  .nav-links a { text-decoration: none; color: var(--ink-soft); transition: color 150ms ease; }
+  .nav-links a:hover, .nav-links a:focus-visible { color: var(--ink); }
+  .nav-links a:focus-visible { outline: 2px solid var(--emerald); outline-offset: 4px; }
+  .nav-status { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-soft); }
+  .dot-live {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--emerald);
+    box-shadow: 0 0 0 0 rgba(11,110,79,0.5); animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(38,83,212,0.45); }
+    70% { box-shadow: 0 0 0 8px rgba(38,83,212,0); }
+    100% { box-shadow: 0 0 0 0 rgba(38,83,212,0); }
+  }
+
+  section { padding: clamp(80px, 12vw, 140px) clamp(20px, 5vw, 56px); max-width: 1180px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    position: relative; min-height: 92vh; display: flex; align-items: center;
+    padding-top: calc(clamp(80px, 12vw, 140px) + 40px);
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute; inset: -20% -10% auto auto; width: 620px; height: 620px;
+    border-radius: 48% 52% 60% 40% / 45% 55% 45% 55%;
+    background: radial-gradient(circle at 30% 30%, var(--emerald) 0%, var(--emerald-deep) 55%, transparent 75%);
+    opacity: 0.16; filter: blur(10px);
+    animation: drift 22s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes drift {
+    0% { transform: translate(0,0) rotate(0deg) scale(1); }
+    100% { transform: translate(-40px, 50px) rotate(18deg) scale(1.08); }
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 820px; }
+  .eyebrow-line { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; color: var(--ink-soft); font-size: 14px; }
+  .clock { font-family: 'JetBrains Mono', monospace; color: var(--emerald); font-weight: 500; }
+  h1.hero-title {
+    font-size: clamp(42px, 7vw, 76px); line-height: 1.04; font-weight: 500; margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+  .hero-title em { font-style: italic; color: var(--emerald); }
+  .hero-sub { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 60ch; line-height: 1.6; margin: 0 0 14px; }
+  .status-line {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--ochre);
+    min-height: 20px; margin-bottom: 36px;
+  }
+  .status-line .cursor { display: inline-block; width: 8px; background: var(--ochre); margin-left: 2px; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 3px;
+    font-size: 14.5px; font-weight: 500; text-decoration: none; cursor: pointer; border: 1px solid transparent;
+    transition: transform 150ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+  .btn:focus-visible { outline: 2px solid var(--emerald); outline-offset: 3px; }
+  .btn-primary { background: var(--ink); color: var(--bg); }
+  .btn-primary:hover { background: var(--emerald-deep); transform: translateY(-1px); }
+  .btn-ghost { border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  /* section headers */
+  .section-head { margin-bottom: 48px; max-width: 640px; }
+  .section-kicker { color: var(--emerald); font-size: 14px; margin-bottom: 10px; font-weight: 500; }
+  .section-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 500; margin: 0 0 14px; line-height: 1.12; }
+  .section-head p { color: var(--ink-soft); line-height: 1.6; margin: 0; font-size: 16px; }
+
+  /* LIVE ACTIVITY PANEL */
+  #activity { background: var(--bg-panel); color: var(--cream); max-width: none; padding-left: clamp(20px,5vw,56px); padding-right: clamp(20px,5vw,56px); }
+  #activity .inner { max-width: 1180px; margin: 0 auto; }
+  #activity .section-head p { color: #9BA7C9; }
+  #activity .section-kicker { color: #7FA6F2; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--panel-line); border: 1px solid var(--panel-line); margin-bottom: 56px; }
+  .stat { background: var(--bg-panel); padding: 28px 22px; }
+  .stat-num { font-family: 'JetBrains Mono', monospace; font-size: clamp(30px, 4vw, 42px); font-weight: 500; color: #E7EEFC; }
+  .stat-label { font-size: 13px; color: #8C98BE; margin-top: 6px; }
+
+  .heat-wrap { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 40px; }
+  .heatmap { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 11px); gap: 3px; overflow-x: auto; padding-bottom: 6px; }
+  .cell { width: 11px; height: 11px; border-radius: 2px; background: rgba(243,238,227,0.07); }
+  .heat-side { font-size: 13px; color: #8C98BE; line-height: 1.7; min-width: 190px; }
+  .heat-side strong { color: #E7EEFC; font-weight: 500; }
+  #tooltip {
+    position: fixed; pointer-events: none; background: #E7EEFC; color: #0B1526; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; padding: 5px 9px; border-radius: 3px; opacity: 0; transform: translate(-50%, -130%); transition: opacity 120ms ease; z-index: 200; white-space: nowrap;
+  }
+
+  .session-line { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: #8C98BE; border-top: 1px solid var(--panel-line); padding-top: 22px; }
+  .session-line span.mono { color: #E7EEFC; }
+
+  /* PROJECTS */
+  .proj-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+  .proj-card {
+    grid-column: span 12; border: 1px solid var(--line); padding: 30px; border-radius: 3px;
+    transition: border-color 180ms ease, transform 180ms ease; position: relative;
+  }
+  @media (min-width: 760px) {
+    .proj-card.wide { grid-column: span 7; }
+    .proj-card.narrow { grid-column: span 5; }
+  }
+  .proj-card:hover { border-color: var(--emerald); transform: translateY(-2px); }
+  .proj-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+  .proj-title { font-size: 20px; font-weight: 600; margin: 0; }
+  .proj-year { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); white-space: nowrap; padding-top: 4px; }
+  .proj-desc { color: var(--ink-soft); font-size: 14.5px; line-height: 1.6; margin: 0 0 20px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 12px; font-family: 'JetBrains Mono', monospace; padding: 4px 9px; border: 1px solid var(--line); border-radius: 3px; color: var(--ink-soft); text-decoration: none; display: inline-block; }
+  a.tag { cursor: pointer; transition: border-color 150ms ease, color 150ms ease; }
+  a.tag:hover { border-color: var(--emerald); color: var(--emerald); }
+
+  /* SKILLS */
+  .skill-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px 48px; }
+  .skill-group h3 { font-size: 14px; color: var(--emerald); font-weight: 600; margin: 0 0 18px; }
+  .skill-item { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .skill-item:last-child { border-bottom: none; }
+  .dots { display: flex; gap: 5px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
+  .dot.filled { background: var(--emerald); }
+
+  /* ABOUT */
+  #about .inner { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: start; }
+  @media (min-width: 760px) { #about .inner { grid-template-columns: 1.1fr 0.9fr; } }
+  #about p { font-size: 17px; line-height: 1.75; color: var(--ink-soft); margin: 0 0 18px; }
+  #about p:first-of-type { font-size: 19px; color: var(--ink); }
+  .about-meta { border: 1px solid var(--line); border-radius: 3px; padding: 26px; font-size: 14px; }
+  .about-meta div { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); }
+  .about-meta div:last-child { border-bottom: none; }
+  .about-meta span:last-child { color: var(--ink); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  .cert-block { margin-top: 56px; padding-top: 44px; border-top: 1px solid var(--line); }
+  .cert-block h3 { font-size: 14px; color: var(--emerald); font-weight: 600; margin: 0 0 22px; }
+  .cert-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px 32px; }
+  .cert-item { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+  .cert-item span:first-child { color: var(--ink); }
+  .cert-item span:last-child { color: var(--ink-soft); font-family: 'JetBrains Mono', monospace; font-size: 12.5px; white-space: nowrap; }
+
+  /* CONTACT */
+  #contact { text-align: left; }
+  .contact-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 30px; border-bottom: 1px solid var(--line); padding-bottom: 50px; margin-bottom: 30px; }
+  .contact-email { font-size: clamp(28px, 5vw, 46px); font-weight: 500; text-decoration: none; border-bottom: 2px solid var(--emerald); padding-bottom: 4px; }
+  .contact-links { display: flex; gap: 24px; font-size: 14px; }
+  .contact-links a { text-decoration: none; color: var(--ink-soft); }
+  .contact-links a:hover { color: var(--ink); }
+  footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 13px; color: var(--ink-soft); }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity 600ms ease, transform 600ms ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="tooltip"></div>
+
+<nav>
+  <div class="nav-name serif">Neha Rai</div>
+  <div class="nav-links">
+    <a href="#activity">Activity</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-status"><span class="dot-live"></span> <span id="nav-clock" class="mono"></span></div>
+</nav>
+
+<section id="hero">
+  <div class="blob"></div>
+  <div class="hero-inner">
+    <div class="eyebrow-line">
+      <span class="dot-live"></span>
+      <span>Open to internships &amp; junior roles · <span class="clock" id="hero-clock"></span> local</span>
+    </div>
+    <h1 class="hero-title serif">Software developer,<br>learning by <em>building.</em></h1>
+    <p class="hero-sub">I'm an aspiring software developer who learns by shipping full, working applications — not just following tutorials. Java, Python, and the web stack are my daily tools, with SQL and backend logic underneath everything I build.</p>
+    <p class="status-line mono" id="typewriter"></p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">See the work</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="activity" aria-label="Live activity">
+  <div class="inner">
+    <div class="section-head reveal">
+      <div class="section-kicker">Live activity</div>
+      <h2 class="serif">Consistency, measured.</h2>
+      <p>A running log of how often I actually show up to write code — not a highlight reel, the whole pattern.</p>
+    </div>
+
+    <div class="stat-row reveal">
+      <div class="stat"><div class="stat-num" data-count="2">0</div><div class="stat-label">Full-stack projects shipped</div></div>
+      <div class="stat"><div class="stat-num" data-count="11">0</div><div class="stat-label">Languages &amp; tools used</div></div>
+      <div class="stat"><div class="stat-num" data-count="4">0</div><div class="stat-label">Certifications earned</div></div>
+      <div class="stat"><div class="stat-num" data-count="3">0</div><div class="stat-label">Years learning to code</div></div>
+    </div>
+
+    <div class="heat-wrap reveal">
+      <div class="heatmap" id="heatmap"></div>
+      <div class="heat-side">
+        <div><strong>Last 52 weeks</strong></div>
+        <div>Hover a square to see that day's commits. Darker green, more shipped. (Illustrative pattern for now — connect to the GitHub API to make it real.)</div>
+      </div>
+    </div>
+
+    <div class="session-line">
+      <span class="dot-live"></span>
+      <span>You've been reading this page for <span class="mono" id="session-timer">0:00</span> — thanks for sticking around.</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head reveal">
+    <div class="section-kicker">Selected work</div>
+    <h2 class="serif">A few things I've built.</h2>
+    <p>Two full-stack projects, built end to end — from schema design to the interface.</p>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card reveal">
+      <div class="proj-top"><h3 class="proj-title">HYDRA — water intake tracker</h3></div>
+      <p class="proj-desc">A full-stack hydration tracker with routes for logging intake, setting daily goals, and undoing entries. SQL aggregates and GROUP BY queries power a consecutive-day streak counter and a 7-day intake chart, and the UI includes a jug that fills in real time as you log water — built from scratch with no frontend framework.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
+      <div class="tags" style="margin-top:12px;">
+        <a class="tag" href="https://hydra-la8l.onrender.com/dashboard" target="_blank" rel="noopener">Live demo ↗</a>
+        <a class="tag" href="https://github.com/neharai18/hydra" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-top"><h3 class="proj-title">BLOSSOM — e-commerce gift platform</h3></div>
+      <p class="proj-desc">A complete e-commerce application with product browsing, customization, authentication, a shopping cart, order processing, and an admin dashboard. Runs on a normalized MySQL schema connecting products, orders, users, and cart items, with the PHP backend wired directly to frontend forms for registration, login, and checkout.</p>
+      <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
+      <div class="tags" style="margin-top:12px;">
+        <a class="tag" href="https://github.com/neharai18" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head reveal">
+    <div class="section-kicker">Toolkit</div>
+    <h2 class="serif">What I reach for.</h2>
+    <p>Fluency, not a scoreboard — swap in whatever actually reflects your stack.</p>
+  </div>
+  <div class="skill-groups">
+    <div class="skill-group reveal">
+      <h3>Languages</h3>
+      <div class="skill-item">Java <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">Python <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">PHP <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">JavaScript / SQL <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>Web &amp; database</h3>
+      <div class="skill-item">HTML / CSS <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div></div>
+      <div class="skill-item">Flask <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">MySQL <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">SQLite <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+    </div>
+    <div class="skill-group reveal">
+      <h3>Tools &amp; concepts</h3>
+      <div class="skill-item">Git / GitHub <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">VS Code / XAMPP <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div></div>
+      <div class="skill-item">OOP / DBMS <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div></div>
+      <div class="skill-item">DSA <div class="dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="inner">
+    <div class="reveal">
+      <p class="serif">I'd rather finish one real, working project than half-finish ten tutorials.</p>
+      <p>I'm an aspiring software developer with a foundation in Java, Python, SQL, and web development, built mostly through hands-on projects rather than coursework alone. HYDRA and BLOSSOM are both full-stack applications I designed, built, and deployed myself — schema, backend logic, and interface included — and I'm currently deepening my grasp of DSA, OOP, and database design to back that up.</p>
+      <p>I'm pursuing an MCA with a focus on Generative AI at Jain University, alongside certifications in AI/ML and business fundamentals. I'm looking for internships or junior developer roles where I can keep building real things and learning fast.</p>
+    </div>
+    <div class="about-meta reveal">
+      <div><span>Based in</span><span>Mangalore, India</span></div>
+      <div><span>Education</span><span>MCA (Gen AI) — ongoing</span></div>
+      <div><span>Currently</span><span>Open to internships</span></div>
+      <div><span>Stack</span><span>Java · Python · Flask</span></div>
+      <div><span>Certifications</span><span>4 earned</span></div>
+    </div>
+  </div>
+
+  <div class="cert-block reveal">
+    <h3>Certifications &amp; practice</h3>
+    <div class="cert-list">
+      <div class="cert-item"><span>NASSCOM — Artificial Intelligence and Machine Learning</span><span>May 2026</span></div>
+      <div class="cert-item"><span>IBM — Artificial Intelligence Fundamentals</span><span>Aug 2025</span></div>
+      <div class="cert-item"><span>Entrepreneurship Development</span><span>Feb 2026</span></div>
+      <div class="cert-item"><span>Business Communication</span><span>Jun 2024</span></div>
+      <div class="cert-item"><span>Datacom Software Development Job Simulation — Forage</span><span>Oct 2026</span></div>
+    </div>
+    <p style="margin-top:18px; font-size:13.5px; color:var(--ink-soft); line-height:1.6;">The Forage simulation had me review a live web application the way Datacom's engineering team would — tracing a bug back to its root cause and shipping a working fix, then planning what to improve next.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-row reveal">
+    <a href="mailto:rairneha18@gmail.com" class="contact-email serif">rairneha18@gmail.com</a>
+    <div class="contact-links">
+      <a href="https://github.com/neharai18" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/neha-rai-8a7386216" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://drive.google.com/file/d/18NcR9XH4SCFoDKaBJHr-4AC0nlK3DEQ2/view?usp=drivesdk" target="_blank" rel="noopener">Resume</a>
+    </div>
+  </div>
+  <footer>
+    <span>© <span id="year"></span> Neha Rai. Built by hand.</span>
+    <span id="last-updated" class="mono"></span>
+  </footer>
+</section>
+
+<script>
+(function(){
+  "use strict";
+
+  // Scroll progress
+  var progress = document.getElementById('progress');
+  function updateProgress(){
+    var h = document.documentElement;
+    var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progress.style.width = (isFinite(scrolled) ? scrolled : 0) + '%';
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // Live clock
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+  function tickClock(){
+    var d = new Date();
+    var str = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+    var navClock = document.getElementById('nav-clock');
+    var heroClock = document.getElementById('hero-clock');
+    if (navClock) navClock.textContent = str;
+    if (heroClock) heroClock.textContent = str;
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // Typewriter rotating status
+  var phrases = [
+    'writing a SQL query with one too many JOINs',
+    'debugging a Flask route at midnight',
+    'committing with an actual meaningful message',
+    'learning one more DSA pattern',
+    'fixing a bug someone else would call a feature'
+  ];
+  var twEl = document.getElementById('typewriter');
+  var pIndex = 0, cIndex = 0, deleting = false;
+  function typeLoop(){
+    var current = phrases[pIndex];
+    if (!deleting) {
+      cIndex++;
+      if (cIndex > current.length) { deleting = true; setTimeout(typeLoop, 1400); return; }
+    } else {
+      cIndex--;
+      if (cIndex < 0) { deleting = false; pIndex = (pIndex + 1) % phrases.length; cIndex = 0; }
+    }
+    twEl.innerHTML = '&gt; ' + current.slice(0, cIndex) + '<span class="cursor">&nbsp;</span>';
+    setTimeout(typeLoop, deleting ? 28 : 46);
+  }
+  typeLoop();
+
+  // Session timer
+  var start = Date.now();
+  var sessionEl = document.getElementById('session-timer');
+  setInterval(function(){
+    var secs = Math.floor((Date.now() - start) / 1000);
+    var m = Math.floor(secs / 60), s = secs % 60;
+    sessionEl.textContent = m + ':' + pad(s);
+  }, 1000);
+
+  // Footer meta
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('last-updated').textContent = 'Page generated ' + new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+
+  // Heatmap (illustrative activity pattern, seeded so it's stable per visit)
+  var heat = document.getElementById('heatmap');
+  var tooltip = document.getElementById('tooltip');
+  var seed = 42;
+  function rand(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  var today = new Date();
+  var days = [];
+  for (var i = 363; i >= 0; i--) {
+    var d = new Date(today);
+    d.setDate(d.getDate() - i);
+    var weekday = d.getDay();
+    var base = (weekday === 0 || weekday === 6) ? 0.35 : 0.72;
+    var active = rand() < base;
+    var level = active ? Math.ceil(rand() * 4) : 0;
+    days.push({ date: d, level: level });
+  }
+  var frag = document.createDocumentFragment();
+  var levelColor = ['rgba(243,238,227,0.07)', '#1C2F5F', '#254789', '#3864C4', '#7FA6F2'];
+  days.forEach(function(day){
+    var cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.style.background = levelColor[day.level];
+    var label = day.date.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+    var commits = day.level === 0 ? 'no commits' : day.level + (day.level === 1 ? ' commit' : ' commits');
+    cell.addEventListener('mouseenter', function(e){
+      tooltip.textContent = label + ' · ' + commits;
+      tooltip.style.opacity = '1';
+    });
+    cell.addEventListener('mousemove', function(e){
+      tooltip.style.left = e.clientX + 'px';
+      tooltip.style.top = e.clientY + 'px';
+    });
+    cell.addEventListener('mouseleave', function(){ tooltip.style.opacity = '0'; });
+    frag.appendChild(cell);
+  });
+  heat.appendChild(frag);
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // Count-up stats
+  var statNums = document.querySelectorAll('.stat-num');
+  function countUp(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var startTime = null;
+    var duration = 1100;
+    function step(ts){
+      if (!startTime) startTime = ts;
+      var progressRatio = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progressRatio, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progressRatio < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    var statIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          countUp(entry.target);
+          statIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    statNums.forEach(function(el){ statIo.observe(el); });
+  } else {
+    statNums.forEach(countUp);
+  }
+})();
+</script>
+</body>
+</html>
